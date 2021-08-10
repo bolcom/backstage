@@ -19,9 +19,12 @@ import {
   AuthorizeOptions,
   AuthorizeResponse,
   AuthorizationResult,
+  IdentityApi,
 } from '@backstage/core-plugin-api';
 
 export class DefaultAuthorizationApi implements AuthorizationApi {
+  constructor(private readonly identityApi: IdentityApi) {}
+
   async authorize({
     permission,
   }: AuthorizeOptions): Promise<AuthorizeResponse> {

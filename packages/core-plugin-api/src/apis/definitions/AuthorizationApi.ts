@@ -24,7 +24,6 @@ export enum AuthorizationResult {
 export type AuthorizeOptions = {
   // TODO(mtlewis/orkohunter): Should `permission`'s type be a string or a literal type composed of available permission strings?
   permission: string;
-  idToken?: string;
   // TODO(mtlewis/orkohunter): can we sprinkle some generics somewhere in here to allow stronger typing
   // for authorization context?
   context: {
