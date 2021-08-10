@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 export { EntityContext, useEntity, useEntityFromUrl } from './useEntity';
+export { useEntityAuthorization } from './useEntityAuthorization';
 export { useEntityCompoundName } from './useEntityCompoundName';
 export {
   EntityListContext,
