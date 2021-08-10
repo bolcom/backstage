@@ -24,6 +24,7 @@ export * from './auth';
 
 export * from './AlertApi';
 export * from './AppThemeApi';
+export * from './AuthorizationApi';
 export * from './ConfigApi';
 export * from './DiscoveryApi';
 export * from './ErrorApi';
