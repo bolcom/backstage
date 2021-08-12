@@ -90,13 +90,10 @@ export const EntityContextMenu = ({
     <Divider key="the divider is here!" />,
   ];
 
-  const { loading, value } = useEntityAuthorization(
-    'catalog.component.unregister',
-  );
+  const status = useEntityAuthorization('catalog.component.unregister');
 
   const disableUnregister =
-    (loading ||
-      value?.result === AuthorizationResult.DENY ||
+    (status !== AuthorizationResult.ALLOW ||
       UNSTABLE_contextMenuOptions?.disableUnregister) ??
     false;
 
