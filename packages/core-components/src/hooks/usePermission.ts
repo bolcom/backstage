@@ -16,33 +16,31 @@
 
 import { useAsync } from 'react-use';
 import {
-  authorizationApiRef,
-  AuthorizationResult,
+  permissionApiRef,
+  AuthorizeResult,
   useApi,
 } from '@backstage/core-plugin-api';
 
-enum AsyncAuthorizationStatus {
+enum AsyncPermissionStatus {
   PENDING = 'PENDING',
 }
 
-export type AuthorizationStatus =
-  | AsyncAuthorizationStatus
-  | AuthorizationResult;
+export type PermissionStatus = AsyncPermissionStatus | AuthorizeResult;
 
-export const useAuthorization = (
+export const usePermission = (
   permission: string,
   context: { [key: string]: any },
-): AuthorizationStatus => {
-  const authorizationApi = useApi(authorizationApiRef);
+): PermissionStatus => {
+  const permissionApi = useApi(permissionApiRef);
 
   const state = useAsync(async () => {
-    const { result } = await authorizationApi.authorize({
+    const { result } = await permissionApi.authorize({
       permission,
       context,
     });
 
     return result;
-  }, [authorizationApi, permission]);
+  }, [permissionApi, permission]);
 
-  return state.loading ? AsyncAuthorizationStatus.PENDING : state.value!;
+  return state.loading ? AsyncPermissionStatus.PENDING : state.value!;
 };

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-export { useAuthorization } from './useAuthorization';
 export { useQueryParamState } from './useQueryParamState';
 export { useSupportConfig } from './useSupportConfig';
+export { usePermission } from './usePermission';
 export type {
   SupportConfig,
   SupportItem,

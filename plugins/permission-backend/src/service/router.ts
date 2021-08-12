@@ -18,31 +18,14 @@ import { errorHandler, SingleHostDiscovery } from '@backstage/backend-common';
 import express, { Response } from 'express';
 import Router from 'express-promise-router';
 import { Logger } from 'winston';
+import { AuthorizeResponse, AuthorizeResult } from '@backstage/core-plugin-api';
 import { IdentityClient } from '@backstage/plugin-auth-backend';
 import { Config } from '@backstage/config';
 
 export interface RouterOptions {
   logger: Logger;
   config: Config;
-
-  // handler: HandlerFunc
 }
-
-export type AuthorizeOptions = {
-  permission: string;
-  context: {
-    [key: string]: any;
-  };
-};
-
-export enum AuthorizationResult {
-  DENY = 'DENY',
-  ALLOW = 'ALLOW',
-}
-
-export type AuthorizeResponse = {
-  result: AuthorizationResult;
-};
 
 export async function createRouter(
   options: RouterOptions,
@@ -60,18 +43,22 @@ export async function createRouter(
   router.post('/authorize', async (req, res: Response<AuthorizeResponse>) => {
     const token = IdentityClient.getBearerToken(req.headers.authorization);
 
+    // TODO(mtlewis/orkohunter): Should be possible to register
+    // a permission handler elsewhere and run it here to determine
+    // the result.
+
     if (token) {
       const { id } = await identity.authenticate(token);
       logger.info(`authorizing as user: ${id}...`);
 
       res.json({
-        result: AuthorizationResult.ALLOW,
+        result: AuthorizeResult.ALLOW,
       });
     } else {
       logger.info('authorizing anonymously...');
 
       res.json({
-        result: AuthorizationResult.DENY,
+        result: AuthorizeResult.DENY,
       });
     }
   });

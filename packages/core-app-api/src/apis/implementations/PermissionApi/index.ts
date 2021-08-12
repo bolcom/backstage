@@ -15,23 +15,20 @@
  */
 
 import {
-  AuthorizationApi,
+  PermissionApi,
   AuthorizeOptions,
   AuthorizeResponse,
   DiscoveryApi,
   IdentityApi,
 } from '@backstage/core-plugin-api';
 
-export class DefaultAuthorizationApi implements AuthorizationApi {
+export class DefaultPermissionApi implements PermissionApi {
   constructor(
     private readonly discoveryApi: DiscoveryApi,
     private readonly identityApi: IdentityApi,
   ) {}
 
   async authorize(options: AuthorizeOptions): Promise<AuthorizeResponse> {
-    // TODO(mtlewis/orkohunter): Should be possible to register
-    // an authorization handler elsewhere and run it here to determine
-    // the authorization result.
     const permissionBackendUrl = await this.discoveryApi.getBaseUrl(
       'permission',
     );

@@ -27,8 +27,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Cancel from '@material-ui/icons/Cancel';
 import MoreVert from '@material-ui/icons/MoreVert';
 import React, { useState } from 'react';
-import { AuthorizationResult, IconComponent } from '@backstage/core-plugin-api';
-import { useEntityAuthorization } from '@backstage/plugin-catalog-react';
+import { AuthorizeResult, IconComponent } from '@backstage/core-plugin-api';
+import { useEntityPermission } from '@backstage/plugin-catalog-react';
 
 // TODO(freben): It should probably instead be the case that Header sets the theme text color to white inside itself unconditionally instead
 const useStyles = makeStyles({
@@ -90,10 +90,10 @@ export const EntityContextMenu = ({
     <Divider key="the divider is here!" />,
   ];
 
-  const status = useEntityAuthorization('catalog.component.unregister');
+  const status = useEntityPermission('catalog.component.unregister');
 
   const disableUnregister =
-    (status !== AuthorizationResult.ALLOW ||
+    (status !== AuthorizeResult.ALLOW ||
       UNSTABLE_contextMenuOptions?.disableUnregister) ??
     false;
 

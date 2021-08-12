@@ -16,7 +16,7 @@
 
 import { ApiRef, createApiRef } from '../system';
 
-export enum AuthorizationResult {
+export enum AuthorizeResult {
   DENY = 'DENY',
   ALLOW = 'ALLOW',
 }
@@ -24,21 +24,21 @@ export enum AuthorizationResult {
 export type AuthorizeOptions = {
   // TODO(mtlewis/orkohunter): Should `permission`'s type be a string or a literal type composed of available permission strings?
   permission: string;
-  // TODO(mtlewis/orkohunter): can we sprinkle some generics somewhere in here to allow stronger typing
-  // for authorization context?
+  // TODO(mtlewis/orkohunter): can we sprinkle some generics somewhere in here
+  // to allow stronger typing of context?
   context: {
     [key: string]: any;
   };
 };
 
 export type AuthorizeResponse = {
-  result: AuthorizationResult;
+  result: AuthorizeResult;
 };
 
-export type AuthorizationApi = {
+export type PermissionApi = {
   authorize(options: AuthorizeOptions): Promise<AuthorizeResponse>;
 };
 
-export const authorizationApiRef: ApiRef<AuthorizationApi> = createApiRef({
-  id: 'core.authorization',
+export const permissionApiRef: ApiRef<PermissionApi> = createApiRef({
+  id: 'core.permission',
 });

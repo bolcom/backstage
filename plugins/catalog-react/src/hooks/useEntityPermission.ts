@@ -15,11 +15,11 @@
  */
 
 import { useEntity } from './useEntity';
-import { useAuthorization } from '@backstage/core-components';
+import { usePermission } from '@backstage/core-components';
 
-export const useEntityAuthorization = (permission: string) => {
+export const useEntityPermission = (permission: string) => {
   // TODO(mtlewis/orkohunter): what happens if there's no entity?
   const entity = useEntity();
 
-  return useAuthorization(permission, { entity });
+  return usePermission(permission, { entity });
 };

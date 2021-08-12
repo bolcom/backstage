@@ -24,11 +24,11 @@ export * from './auth';
 
 export * from './AlertApi';
 export * from './AppThemeApi';
-export * from './AuthorizationApi';
 export * from './ConfigApi';
 export * from './DiscoveryApi';
 export * from './ErrorApi';
 export * from './FeatureFlagsApi';
 export * from './IdentityApi';
 export * from './OAuthRequestApi';
+export * from './PermissionApi';
 export * from './StorageApi';
