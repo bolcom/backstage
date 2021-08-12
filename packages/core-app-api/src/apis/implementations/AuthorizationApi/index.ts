@@ -18,24 +18,35 @@ import {
   AuthorizationApi,
   AuthorizeOptions,
   AuthorizeResponse,
-  AuthorizationResult,
+  DiscoveryApi,
   IdentityApi,
 } from '@backstage/core-plugin-api';
 
 export class DefaultAuthorizationApi implements AuthorizationApi {
-  constructor(private readonly identityApi: IdentityApi) {}
+  constructor(
+    private readonly discoveryApi: DiscoveryApi,
+    private readonly identityApi: IdentityApi,
+  ) {}
 
-  async authorize({
-    permission,
-  }: AuthorizeOptions): Promise<AuthorizeResponse> {
+  async authorize(options: AuthorizeOptions): Promise<AuthorizeResponse> {
     // TODO(mtlewis/orkohunter): Should be possible to register
     // an authorization handler elsewhere and run it here to determine
     // the authorization result.
+    const permissionBackendUrl = await this.discoveryApi.getBaseUrl(
+      'permission',
+    );
 
-    // eslint-disable-next-line no-console
-    console.log(`Permission requested for "${permission}"`);
-    return {
-      result: AuthorizationResult.ALLOW,
-    };
+    const token = await this.identityApi.getIdToken();
+    const response = await fetch(`${permissionBackendUrl}/authorize`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify(options),
+    });
+
+    // TODO(mtlewis/orkohunter) validate response as AuthorizeResponse.
+    return response.json();
   }
 }

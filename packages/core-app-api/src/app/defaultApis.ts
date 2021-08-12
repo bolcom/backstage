@@ -52,6 +52,7 @@ import {
   oneloginAuthApiRef,
   oidcAuthApiRef,
   authorizationApiRef,
+  identityApiRef,
 } from '@backstage/core-plugin-api';
 
 import OAuth2Icon from '@material-ui/icons/AcUnit';
@@ -69,8 +70,9 @@ export const defaultApis = [
   createApiFactory(alertApiRef, new AlertApiForwarder()),
   createApiFactory({
     api: authorizationApiRef,
-    deps: { identityApi: identityApiRef },
-    factory: ({ identityApi }) => new DefaultAuthorizationApi({ identityApi }),
+    deps: { discoveryApi: discoveryApiRef, identityApi: identityApiRef },
+    factory: ({ discoveryApi, identityApi }) =>
+      new DefaultAuthorizationApi(discoveryApi, identityApi),
   }),
   createApiFactory({
     api: errorApiRef,
