@@ -41,7 +41,7 @@ export async function createRouter(
   router.use(express.json());
 
   router.post('/authorize', async (req, res: Response<AuthorizeResponse>) => {
-    const token = IdentityClient.getBearerToken(req.headers.authorization);
+    const token = IdentityClient.getBearerToken(req.header('authorization'));
 
     // TODO(mtlewis/orkohunter): Should be possible to register
     // a permission handler elsewhere and run it here to determine
@@ -52,6 +52,7 @@ export async function createRouter(
       logger.info(`authorizing as user: ${id}...`);
 
       res.json({
+        // TODO: why does this enum work? It's a frontend package. Should move to a common package.
         result: AuthorizeResult.ALLOW,
       });
     } else {
