@@ -138,6 +138,13 @@ export async function createRouter(
             'metadata.namespace': namespace,
             'metadata.name': name,
           }),
+          /*
+          1. Fetch entity(s) that match filter.
+          2. Pass the entity to the authHandler,
+          3. Return those that are allowed to be viewed.
+          */
+          // permissionHandler: async (ctx: {entity: Entity, userData: UserData}) => {
+          // })
         });
         if (!entities.length) {
           throw new NotFoundError(
