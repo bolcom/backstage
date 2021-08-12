@@ -91,6 +91,8 @@ export const EntityContextMenu = ({
     <Divider key="the divider is here!" />,
   ];
 
+  // TODO(mtlewis/orkohunter): replace with object exporting simple API?
+  // e.g. isAllowed()?
   const status = useEntityPermission(CatalogPermission.ENTITY_UNREGISTER);
 
   const disableUnregister =
