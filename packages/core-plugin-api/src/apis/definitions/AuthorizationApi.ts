@@ -36,8 +36,6 @@ export type AuthorizeResponse = {
 };
 
 export type AuthorizationApi = {
-  // TODO(mtlewis): Shall we consider starting out with a synchronous
-  // method here?
   authorize(options: AuthorizeOptions): Promise<AuthorizeResponse>;
 };
 
