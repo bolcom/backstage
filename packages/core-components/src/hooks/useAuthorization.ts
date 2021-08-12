@@ -15,26 +15,20 @@
  */
 
 import { useAsync } from 'react-use';
-import {
-  authorizationApiRef,
-  identityApiRef,
-  useApi,
-} from '@backstage/core-plugin-api';
+import { authorizationApiRef, useApi } from '@backstage/core-plugin-api';
 
 export const useAuthorization = (
   permission: string,
   context: { [key: string]: any },
 ) => {
-  const identityApi = useApi(identityApiRef);
   const authorizationApi = useApi(authorizationApiRef);
 
   return useAsync(async () => {
-    const idToken = await identityApi.getIdToken();
-
-    return authorizationApi.authorize({
+    const result = await authorizationApi.authorize({
       permission,
-      idToken,
       context,
     });
-  }, [authorizationApi, identityApi, permission]);
+
+    return result;
+  }, [authorizationApi, permission]);
 };
