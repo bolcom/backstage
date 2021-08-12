@@ -41,6 +41,7 @@
     "@backstage/plugin-jenkins-backend": "^0.1.2",
     "@backstage/plugin-kubernetes-backend": "^0.3.14",
     "@backstage/plugin-kafka-backend": "^0.2.8",
+    "@backstage/plugin-permission-backend": "^0.1.0",
     "@backstage/plugin-proxy-backend": "^0.2.9",
     "@backstage/plugin-rollbar-backend": "^0.1.13",
     "@backstage/plugin-scaffolder-backend": "^0.15.0",
