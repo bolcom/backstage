@@ -15,5 +15,6 @@
  */
 
 export enum CatalogPermission {
+  ENTITY_READ = 'catalog.entity.read',
   ENTITY_UNREGISTER = 'catalog.entity.unregister',
 }
