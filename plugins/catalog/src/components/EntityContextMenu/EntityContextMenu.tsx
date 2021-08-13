@@ -27,7 +27,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Cancel from '@material-ui/icons/Cancel';
 import MoreVert from '@material-ui/icons/MoreVert';
 import React, { useState } from 'react';
-import { AuthorizeResult, IconComponent } from '@backstage/core-plugin-api';
+import { IconComponent } from '@backstage/core-plugin-api';
 import { useEntityPermission } from '@backstage/plugin-catalog-react';
 import { CatalogPermission } from '@backstage/catalog-model';
 
@@ -91,12 +91,12 @@ export const EntityContextMenu = ({
     <Divider key="the divider is here!" />,
   ];
 
-  // TODO(mtlewis/orkohunter): replace with object exporting simple API?
-  // e.g. isAllowed()?
-  const status = useEntityPermission(CatalogPermission.ENTITY_UNREGISTER);
+  const unregisterPermission = useEntityPermission(
+    CatalogPermission.ENTITY_UNREGISTER,
+  );
 
   const disableUnregister =
-    (status !== AuthorizeResult.ALLOW ||
+    (!unregisterPermission.isAllowed() ||
       UNSTABLE_contextMenuOptions?.disableUnregister) ??
     false;
 

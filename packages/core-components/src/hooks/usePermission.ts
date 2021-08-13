@@ -21,16 +21,36 @@ import {
   useApi,
 } from '@backstage/core-plugin-api';
 
-enum AsyncPermissionStatus {
-  PENDING = 'PENDING',
-}
+export class AsyncPermissionResult {
+  constructor(
+    private readonly allowed: boolean,
+    private readonly pending: boolean,
+  ) {}
 
-export type PermissionStatus = AsyncPermissionStatus | AuthorizeResult;
+  static fromAuthorizeResult(authorizeResult: AuthorizeResult | undefined) {
+    return new AsyncPermissionResult(
+      authorizeResult === AuthorizeResult.ALLOW,
+      false,
+    );
+  }
+
+  static pending() {
+    return new AsyncPermissionResult(false, true);
+  }
+
+  isAllowed() {
+    return this.allowed;
+  }
+
+  isPending() {
+    return this.pending;
+  }
+}
 
 export const usePermission = (
   permission: string,
   context: { [key: string]: any },
-): PermissionStatus => {
+): AsyncPermissionResult => {
   const permissionApi = useApi(permissionApiRef);
 
   const state = useAsync(async () => {
@@ -42,5 +62,7 @@ export const usePermission = (
     return result;
   }, [permissionApi, permission]);
 
-  return state.loading ? AsyncPermissionStatus.PENDING : state.value!;
+  return state.loading
+    ? AsyncPermissionResult.pending()
+    : AsyncPermissionResult.fromAuthorizeResult(state.value);
 };
