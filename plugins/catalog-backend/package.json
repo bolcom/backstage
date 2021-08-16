@@ -36,6 +36,8 @@
     "@backstage/core-plugin-api": "^0.1.5",
     "@backstage/errors": "^0.1.1",
     "@backstage/integration": "^0.6.0",
+    "@backstage/permission-client": "^0.1.0",
+    "@backstage/plugin-auth-backend": "^0.3.19",
     "@backstage/plugin-search-backend-node": "^0.4.0",
     "@backstage/search-common": "^0.1.2",
     "@octokit/graphql": "^4.5.8",
