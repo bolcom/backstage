@@ -21,7 +21,7 @@ export enum AuthorizeResult {
   ALLOW = 'ALLOW',
 }
 
-export type AuthorizeOptions = {
+export type AuthorizeRequest = {
   // TODO(mtlewis/orkohunter): Should `permission`'s type be a string or a literal type composed of available permission strings?
   permission: string;
   // TODO(mtlewis/orkohunter): can we sprinkle some generics somewhere in here
@@ -36,7 +36,7 @@ export type AuthorizeResponse = {
 };
 
 export type PermissionApi = {
-  authorize(options: AuthorizeOptions): Promise<AuthorizeResponse>;
+  authorize(options: AuthorizeRequest): Promise<AuthorizeResponse>;
 };
 
 export const permissionApiRef: ApiRef<PermissionApi> = createApiRef({
