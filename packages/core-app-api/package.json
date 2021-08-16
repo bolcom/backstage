@@ -32,6 +32,7 @@
     "@backstage/core-components": "^0.3.1",
     "@backstage/config": "^0.1.6",
     "@backstage/core-plugin-api": "^0.1.6",
+    "@backstage/permission-client": "^0.1.0",
     "@backstage/theme": "^0.2.9",
     "@material-ui/core": "^4.12.2",
     "@material-ui/icons": "^4.9.1",

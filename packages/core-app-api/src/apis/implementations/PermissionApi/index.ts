@@ -16,34 +16,26 @@
 
 import {
   PermissionApi,
-  AuthorizeOptions,
+  AuthorizeRequest,
   AuthorizeResponse,
   DiscoveryApi,
   IdentityApi,
 } from '@backstage/core-plugin-api';
+import { PermissionClient } from '@backstage/permission-client';
 
 export class DefaultPermissionApi implements PermissionApi {
+  private readonly permissionClient: PermissionClient;
+
   constructor(
-    private readonly discoveryApi: DiscoveryApi,
+    discoveryApi: DiscoveryApi,
     private readonly identityApi: IdentityApi,
-  ) {}
+  ) {
+    this.permissionClient = new PermissionClient({ discoveryApi });
+  }
 
-  async authorize(options: AuthorizeOptions): Promise<AuthorizeResponse> {
-    const permissionBackendUrl = await this.discoveryApi.getBaseUrl(
-      'permission',
-    );
-
-    const token = await this.identityApi.getIdToken();
-    const response = await fetch(`${permissionBackendUrl}/authorize`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      },
-      body: JSON.stringify(options),
+  async authorize(options: AuthorizeRequest): Promise<AuthorizeResponse> {
+    return this.permissionClient.authorize(options, {
+      token: await this.identityApi.getIdToken(),
     });
-
-    // TODO(mtlewis/orkohunter) validate response as AuthorizeResponse.
-    return response.json();
   }
 }
