@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-import { errorHandler } from '@backstage/backend-common';
+import {
+  errorHandler,
+  PluginEndpointDiscovery,
+} from '@backstage/backend-common';
 import type { Entity } from '@backstage/catalog-model';
 import {
   analyzeLocationSchema,
@@ -52,6 +55,7 @@ export interface RouterOptions {
   locationService?: LocationService;
   logger: Logger;
   config: Config;
+  discovery: PluginEndpointDiscovery;
 }
 
 export async function createRouter(
