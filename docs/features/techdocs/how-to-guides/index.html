@@ -139,78 +139,94 @@ contains the <code>mkdocs.yml</code> file and <code>docs/</code> directory.</p>
 the repository. The archive does not have any git history attached to it. Also
 it is a compressed file. Hence the file size is significantly smaller than how
 much data git clone has to transfer.</p>
-<h2><a class="anchor" aria-hidden="true" id="how-to-use-a-custom-techdocs-home-page"></a><a href="#how-to-use-a-custom-techdocs-home-page" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How to use a custom TechDocs home page?</h2>
-<h3><a class="anchor" aria-hidden="true" id="1st-way-techdocscustomhome-with-a-custom-configuration"></a><a href="#1st-way-techdocscustomhome-with-a-custom-configuration" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1st way: TechDocsCustomHome with a custom configuration</h3>
-<p>As an example, in your main App.tsx:</p>
-<pre><code class="hljs css language-tsx"><span class="hljs-keyword">import</span> {
-  TechDocsCustomHome,
-  PanelType,
-  TechDocsReaderPage,
-} <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/plugin-techdocs'</span>;
-<span class="hljs-keyword">import</span> { Entity } <span class="hljs-keyword">from</span> <span class="hljs-string">'@backstage/catalog-model'</span>;
-
-<span class="hljs-keyword">const</span> tabsConfig = [
-  {
-    <span class="hljs-attr">label</span>: <span class="hljs-string">'Custom Tab'</span>,
-    <span class="hljs-attr">panels</span>: [
-      {
-        <span class="hljs-attr">title</span>: <span class="hljs-string">'Custom Documents Cards 1'</span>,
-        <span class="hljs-attr">description</span>:
-          <span class="hljs-string">'Explore your internal technical ecosystem through documentation.'</span>,
-        <span class="hljs-attr">panelType</span>: <span class="hljs-string">'DocsCardGrid'</span> <span class="hljs-keyword">as</span> PanelType,
-        <span class="hljs-comment">// optional, is applied to a container of the panel (excludes header of panel)</span>
-        <span class="hljs-attr">panelCSS</span>: { <span class="hljs-attr">maxHeight</span>: <span class="hljs-string">'400px'</span>, <span class="hljs-attr">overflow</span>:<span class="hljs-string">'auto'</span> },
-        <span class="hljs-attr">filterPredicate</span>: <span class="hljs-function">(<span class="hljs-params">entity: Entity</span>) =&gt;</span> !!entity.metadata.annotations?.[<span class="hljs-string">'customCardAnnotationOne'</span>];
-    },
-      {
-        <span class="hljs-attr">title</span>: <span class="hljs-string">'Custom Documents Cards 2'</span>,
-        <span class="hljs-attr">description</span>:
-          <span class="hljs-string">'Explore your internal technical ecosystem through documentation.'</span>,
-        <span class="hljs-attr">panelType</span>: <span class="hljs-string">'DocsCardGrid'</span> <span class="hljs-keyword">as</span> PanelType,
-        <span class="hljs-attr">panelCSS</span>: { <span class="hljs-attr">maxHeight</span>: <span class="hljs-string">'400px'</span>, <span class="hljs-attr">overflow</span>:<span class="hljs-string">'auto'</span> },
-        <span class="hljs-attr">filterPredicate</span>: <span class="hljs-function">(<span class="hljs-params">entity: Entity</span>) =&gt;</span> !!entity.metadata.annotations?.[<span class="hljs-string">'customCardAnnotationTwo'</span>];
-      },
-    ],
-  },
-  {
-    <span class="hljs-attr">label</span>: <span class="hljs-string">'Overview'</span>,
-    <span class="hljs-attr">panels</span>: [
-      {
-        <span class="hljs-attr">title</span>: <span class="hljs-string">'Overview'</span>,
-        <span class="hljs-attr">description</span>:
-          <span class="hljs-string">'Explore your internal technical ecosystem through documentation.'</span>,
-        <span class="hljs-attr">panelType</span>: <span class="hljs-string">'DocsTable'</span> <span class="hljs-keyword">as</span> PanelType,
-        <span class="hljs-attr">filterPredicate</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-literal">true</span>,
-      },
-    ],
-  },
-];
-
-<span class="hljs-keyword">const</span> routes = (
-  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">FlatRoutes</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">Route</span>
-      <span class="hljs-attr">path</span>=<span class="hljs-string">"/docs"</span>
-      <span class="hljs-attr">element</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">TechDocsCustomHome</span> <span class="hljs-attr">tabsConfig</span>=<span class="hljs-string">{tabsConfig}</span> /&gt;</span>}
-    /&gt;
-    <span class="hljs-tag">&lt;<span class="hljs-name">Route</span>
-      <span class="hljs-attr">path</span>=<span class="hljs-string">"/docs/:namespace/:kind/:name/*"</span>
-      <span class="hljs-attr">element</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">TechDocsReaderPage</span> /&gt;</span>}
-    /&gt;
-  <span class="hljs-tag">&lt;/<span class="hljs-name">FlatRoutes</span>&gt;</span></span>
+<h2><a class="anchor" aria-hidden="true" id="how-to-customize-the-techdocs-home-page"></a><a href="#how-to-customize-the-techdocs-home-page" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How to customize the TechDocs home page?</h2>
+<p>TechDocs uses a composability pattern similar to the Search and Catalog plugins
+in Backstage. While a default table experience, similar to the one provided by
+the Catalog plugin, is made available for ease-of-use, it's possible for you to
+provide a completely custom experience, tailored to the needs of your
+organization.</p>
+<p>This is done in your <code>app</code> package. By default, you might see something like
+this in your <code>App.tsx</code>:</p>
+<pre><code class="hljs css language-tsx"><span class="xml">const AppRoutes = () =&gt; {
+  <span class="hljs-tag">&lt;<span class="hljs-name">FlatRoutes</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">"/docs"</span> <span class="hljs-attr">element</span>=<span class="hljs-string">{</span>&lt;<span class="hljs-attr">TechDocsIndexPage</span> /&gt;</span>}&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-name">DefaultTechDocsHome</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Route</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">FlatRoutes</span>&gt;</span>;
+};
+</span></code></pre>
+<p>But you can replace <code>&lt;DefaultTechDocsHome /&gt;</code> with any React component, which
+will be rendered in its place. Most likely, you would want to create and
+maintain such a component in a new directory at
+<code>packages/app/src/components/techdocs</code>, and import and use it in <code>App.tsx</code>:</p>
+<pre><code class="hljs css language-tsx"><span class="hljs-keyword">import</span> { CustomTechDocsHome } <span class="hljs-keyword">from</span> <span class="hljs-string">'./components/techdocs/CustomTechDocsHome'</span>;
+<span class="hljs-regexp">//</span> ...
+const AppRoutes = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  &lt;FlatRoutes&gt;
+    &lt;Route path=<span class="hljs-string">"/docs"</span> element={&lt;TechDocsIndexPage /&gt;}&gt;
+      &lt;CustomTechDocsHome /&gt;
+    &lt;/Route&gt;
+  &lt;/FlatRoutes&gt;;
+};
 </code></pre>
-<p>An example of tabsConfig that corresponds to the default documentation home page
-can be found at <code>plugins/techdocs/src/home/components/TechDocsHome.tsx</code>.</p>
-<p>Currently <code>panelType</code> has DocsCardGrid and DocsTable available. We currently
-recommend that DocsCardGrid can be optionally vertically stacked by setting a
-maxHeight using <code>panelCSS</code>, and DocsTable to be in a tab by itself.</p>
-<h3><a class="anchor" aria-hidden="true" id="2nd-way-custom-home-page-plugin"></a><a href="#2nd-way-custom-home-page-plugin" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2nd way: Custom home page plugin</h3>
-<p>A custom home page plugin can be built that uses the components extensions
-DocsCardGrid and DocsTable, exported from @backstage/techdocs. They both take a
-array of documentation entities ( i.e.have a 'backstage.io/techdocs-ref'
-annotation ) as an 'entities' attribute.</p>
-<p>For a reference to the React structure of the default home page, please refer to
-<code>plugins/techdocs/src/home/components/TechDocsCustomHome.tsx</code>.</p>
-</span></div></article></div><div class="docLastUpdate"><em>Last updated on 8/13/2021</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/features/techdocs/configuring-ci-cd"><span class="arrow-prev">← </span><span class="function-name-prevnext">Configuring CI/CD to generate and publish TechDocs sites</span></a><a class="docs-next button" href="/docs/features/techdocs/troubleshooting"><span>Troubleshooting</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach">How to migrate from TechDocs Basic to Recommended deployment approach?</a><ul class="toc-headings"><li><a href="#1-prepare-a-cloud-storage">1. Prepare a cloud storage</a></li><li><a href="#2-publish-to-storage-from-cicd">2. Publish to storage from CI/CD</a></li><li><a href="#3-switch-techdocs-to-read-only-mode">3. Switch TechDocs to read-only mode</a></li></ul></li><li><a href="#how-to-understand-techdocs-ref-annotation-values">How to understand techdocs-ref annotation values</a><ul class="toc-headings"><li><a href="#why-is-url-reader-faster-than-a-git-clone">Why is URL Reader faster than a git clone?</a></li></ul></li><li><a href="#how-to-use-a-custom-techdocs-home-page">How to use a custom TechDocs home page?</a><ul class="toc-headings"><li><a href="#1st-way-techdocscustomhome-with-a-custom-configuration">1st way: TechDocsCustomHome with a custom configuration</a></li><li><a href="#2nd-way-custom-home-page-plugin">2nd way: Custom home page plugin</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Software Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://backstage.spotify.com">Adopting</a><a href="https://github.com/backstage/community">Community Sessions</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️ at Spotify</a></p><p class="copyright">Copyright © 2021 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
+<h2><a class="anchor" aria-hidden="true" id="how-to-migrate-from-techdocs-alpha-to-beta"></a><a href="#how-to-migrate-from-techdocs-alpha-to-beta" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How to migrate from TechDocs Alpha to Beta</h2>
+<blockquote>
+<p>This guide only applies to the &quot;recommended&quot; TechDocs deployment method (where
+an external storage provider and external CI/CD is used). If you use the
+&quot;basic&quot; or &quot;out-of-the-box&quot; setup, you can stop here! No action needed.</p>
+</blockquote>
+<p>The beta version of TechDocs (v0.x.y) made a breaking change to the way TechDocs
+content was accessed and stored, allowing pages to be accessed with
+case-insensitive entity triplet paths (e.g. <code>/docs/namespace/kind/name</code> whereas
+in prior versions, they could only be accessed at <code>/docs/namespace/Kind/name</code>).
+In order to enable this change, documentation has to be stored in an external
+storage provider using an object key whose entity triplet is lower-cased.</p>
+<p>New installations of TechDocs since the beta version will work fine with no
+action, but for those who were running TechDocs prior to this version, a
+migration will need to be performed so that all existing content in your storage
+bucket matches this lower-case entity triplet expectation.</p>
+<ol>
+<li><p><strong>Ensure you have the right permissions on your storage provider</strong>: In order
+to migrate files in your storage provider, the <code>techdocs-cli</code> needs to be
+able to read/copy/rename/move/delete files. The exact instructions vary by
+storage provider, but check the <a href="/docs/features/techdocs/using-cloud-storage">using cloud storage</a>
+page for details.</p></li>
+<li><p><strong>Run a non-destructive migration of files</strong>: Ensure you have the latest
+version of <code>techdocs-cli</code> installed. Then run the following command, using
+the details relevant for your provider / configuration. This will copy all
+files from, e.g. <code>namespace/Kind/name/index.html</code> to
+<code>namespace/kind/name/index.html</code>, without removing the original files.</p></li>
+</ol>
+<pre><code class="hljs css language-sh">techdocs-cli migrate --publisher-type &lt;awsS3|googleGcs|azureBlobStorage&gt; --storage-name &lt;bucket/container name&gt; --verbose
+</code></pre>
+<ol start="3">
+<li><p><strong>Deploy the updated versions of the TechDocs plugins</strong>: Once the migration
+above has been run, you can deploy the beta versions of the TechDocs backend
+and frontend plugins to your Backstage instance.</p></li>
+<li><p><strong>Verify that your TechDocs sites are still loading/accessible</strong>: Try
+accessing a TechDocs site using different entity-triplet case variants, e.g.
+<code>/docs/namespace/KIND/name</code> or <code>/docs/namespace/kind/name</code>. Your TechDocs
+site should load regardless of the URL path casing you use.</p></li>
+<li><p><strong>Clean up the old objects from storage</strong>: Once you've verified that your
+TechDocs site is accessible, you can clean up your storage bucket by
+re-running the <code>migrate</code> command on the TechDocs CLI, but with an additional
+<code>removeOriginal</code> flag passed:</p></li>
+</ol>
+<pre><code class="hljs css language-sh">techdocs-cli migrate --publisher-type &lt;awsS3|googleGcs|azureBlobStorage&gt; --storage-name &lt;bucket/container name&gt; --removeOriginal --verbose
+</code></pre>
+<ol start="6">
+<li><strong>Update your CI/CD pipelines to use the beta version of the TechDocs CLI</strong>:
+Finally, you can update all of your CI/CD pipelines to use at least v0.x.y of
+the TechDocs CLI, ensuring that all sites are published to the new,
+lower-cased entity triplet paths going forward.</li>
+</ol>
+<p>If you encounter problems running this migration, please <a href="https://github.com/backstage/backstage/issues/new?assignees=&amp;labels=bug&amp;template=bug_template.md&amp;title=[TechDocs]%20Unable%20to%20run%20beta%20migration">report the
+issue</a>. You can temporarily revert to pre-beta storage
+expectations with a configuration change:</p>
+<pre><code class="hljs css language-yaml"><span class="hljs-attr">techdocs:</span>
+  <span class="hljs-attr">legacyUseCaseSensitiveTripletPaths:</span> <span class="hljs-literal">true</span>
+</code></pre>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 8/25/2021</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/features/techdocs/configuring-ci-cd"><span class="arrow-prev">← </span><span class="function-name-prevnext">Configuring CI/CD to generate and publish TechDocs sites</span></a><a class="docs-next button" href="/docs/features/techdocs/troubleshooting"><span>Troubleshooting</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach">How to migrate from TechDocs Basic to Recommended deployment approach?</a><ul class="toc-headings"><li><a href="#1-prepare-a-cloud-storage">1. Prepare a cloud storage</a></li><li><a href="#2-publish-to-storage-from-cicd">2. Publish to storage from CI/CD</a></li><li><a href="#3-switch-techdocs-to-read-only-mode">3. Switch TechDocs to read-only mode</a></li></ul></li><li><a href="#how-to-understand-techdocs-ref-annotation-values">How to understand techdocs-ref annotation values</a><ul class="toc-headings"><li><a href="#why-is-url-reader-faster-than-a-git-clone">Why is URL Reader faster than a git clone?</a></li></ul></li><li><a href="#how-to-customize-the-techdocs-home-page">How to customize the TechDocs home page?</a></li><li><a href="#how-to-migrate-from-techdocs-alpha-to-beta">How to migrate from TechDocs Alpha to Beta</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div class="footer-title"><a href="/"><h2 class="footerLogo"></h2></a></div><div><h5>Docs</h5><a href="/docs/overview/what-is-backstage">What is Backstage?</a><a href="/docs/getting-started/">Getting started</a><a href="/docs/features/software-catalog/software-catalog-overview">Software Catalog</a><a href="/docs/plugins/create-a-plugin">Create a Plugin</a><a href="/docs/dls/design">Designing for Backstage</a></div><div><h5>Community</h5><a href="https://discord.gg/MUpMjP2">Support chatroom</a><a href="https://github.com/backstage/backstage/blob/master/CONTRIBUTING.md">Contributing</a><a href="https://backstage.spotify.com">Adopting</a><a href="https://github.com/backstage/community">Community Sessions</a><a href="https://mailchi.mp/spotify/backstage-community">Subscribe to our newsletter</a><a href="https://www.cncf.io/sandbox-projects/">CNCF Sandbox</a></div><div><h5>More</h5><a href="https://spotify.github.io/">Open Source @ Spotify</a><a href="https://engineering.atspotify.com/">Spotify Engineering Blog</a><a href="https://developer.spotify.com/">Spotify for Developers</a><a href="https://github.com/backstage/backstage">GitHub</a><a class="github-button" href="https://github.com/backstage/backstage" data-icon="octicon-star" data-count-href="/backstage/backstage/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><div class="social"><a href="https://twitter.com/SpotifyEng" class="twitter-follow-button">Follow @SpotifyEng</a></div></div></section><p style="text-align:center"><a href="https://spotify.github.io">Made with ❤️ at Spotify</a></p><p class="copyright">Copyright © 2021 Backstage Project Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page: https://www.linuxfoundation.org/trademark-usage</p></footer></div><script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.js"></script><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script><script>
                 document.addEventListener('keyup', function(e) {
                   if (e.target !== document.body) {
                     return;
